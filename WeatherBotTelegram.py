@@ -107,7 +107,7 @@ def city_handler(message):
 
         # check for the wrong city name
         if 'error' in data_:
-            bot.send_message(message.from_user.id,user_name " 😪أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى ")
+            bot.send_message(message.from_user.id,user_name +" 😪أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى ")
             data["states"][user_id] = CITY_STATE
 
         else:
