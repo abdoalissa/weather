@@ -78,7 +78,7 @@ def main_handler(message):
     user_name = message.from_user.first_name
 
     if message.text.lower() == "/start" or message.text.lower() == 'طقس':
-        bot.send_message(user_id, "مرحبا"+user_name,telegram.ParseMode.HTML)
+        bot.send_message(user_id, "مرحبا"+user_name)
         bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس✏️")
         data["states"][user_id] = CITY_STATE
 
