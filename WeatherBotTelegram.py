@@ -45,6 +45,17 @@ month_dict = {"January": "كانون الثاني",
               "December": "كانون الاول"
               }
 
+
+weather_rep = {"пасмурно": "غائم غالبًا",
+              "солнечно": "مشمس",
+              "ясно": "صافي",
+              "облачно с прояснениями": "غائم",
+              "дождь": "مطر",
+              "снег": "ثلج",
+              "переменная облачность": "غائم جزئيا",
+              "небольшая облачность": "غائم قليلا"
+              }
+
 api_url = 'https://stepik.akentev.com/api/weather'
 
 
@@ -144,7 +155,6 @@ def weather_date(message):
         response = requests.get(api_url, params={'city': city, 'forecast': forecast_day()})
         data_ = response.json()
         smile = data_['description']
-        new_d = data_['description']
 
 
         # smile function
@@ -167,23 +177,6 @@ def weather_date(message):
 
             return send_smile
          
-            
-            if "пасмурно" in data_['description']:
-                new_d = "غائم غالبًا"
-            if "солнечно" in data_['description']:
-                new_d = "مشمس"
-            if "ясно" in data_['description']:
-                new_d = "صافي"
-            if "облачно с прояснениями" in data_['description']:
-                new_d = "غائم"
-            if "дождь" in data_['description']:
-                new_d = "ماطر"
-            if "снег" in data_['description']:
-                new_d = "مثلج"
-            if "переменная облачность" in data_['description']:
-                new_d = "غائم جزئيا"
-            if "небольшая облачность" in data_['description']:
-                new_d = "غائم قليلا"
 
 
         
@@ -191,19 +184,19 @@ def weather_date(message):
         # depending on the selected day, a response from the bot is created
         if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون : {new_d}  {weather_smile()},"
+                             f"الطقس سيكون : {weather_rep[data_['description']]}  {weather_smile()},"
                              f" درجة الحرارة: {ceil(data_['temp'])}°C")
             data["states"][user_id] = CITY_STATE
 
         elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {new_d}  {weather_smile()},"
+                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()},"
                              f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
         elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {new_d}  {weather_smile()},"
+                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()},"
                              f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
