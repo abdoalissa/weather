@@ -187,13 +187,13 @@ def weather_date(message):
         if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
                              f"الطقس: {weather_rep[data_['description']]}  {weather_smile()}\n\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])})
+                             f" درجة الحرارة: {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
                              f"الطقس:  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])})
+                             f" درجة الحرارة: {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         elif "غدا" in message.text.lower():
