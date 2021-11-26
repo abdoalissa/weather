@@ -23,26 +23,26 @@ WEATHER_DATE_STATE = "weather_date_handler"
 data = {'states': {}, MAIN_STATE: {}, CITY_STATE: {}, WEATHER_DATE_STATE: {}, 'forecast': {}, }
 
 # dictionaries for translation into Russian
-week_day = {'Mon': 'Пн',
-            'Tue': 'Вт',
-            'Wed': "Ср",
-            'Thu': "Чт",
-            'Fri': "Пт",
-            'Sat': "Сб",
-            'Sun': "Вс"}
+week_day = {'Mon': 'الاثنين',
+            'Tue': 'الثلاثاء',
+            'Wed': "الاربعاء",
+            'Thu': "الخميس",
+            'Fri': "الجمعة",
+            'Sat': "السبت",
+            'Sun': "الاحد"}
 
-month_dict = {"January": "января",
-              "February": "февраля",
-              "March": "марта",
-              "April": "апреля",
-              "May": "мая",
-              "June": "июня",
-              "July": "июля",
-              "August": "августа",
-              "September": "сентября",
-              "October": "октября",
-              "November": "ноября",
-              "December": "декабря"
+month_dict = {"January": "كانون الثاني",
+              "February": "شباط",
+              "March": "اذار",
+              "April": "نيسان",
+              "May": "ايار",
+              "June": "حزيران",
+              "July": "تموز",
+              "August": "اب",
+              "September": "ايلول",
+              "October": "تشرين الاول",
+              "November": "تشرين الثاني",
+              "December": "كانون الاول"
               }
 
 api_url = 'https://stepik.akentev.com/api/weather'
@@ -65,16 +65,16 @@ def dispatcher(message):
 def main_handler(message):
     user_id = message.from_user.id
 
-    if message.text.lower() == "/start" or message.text.lower() == 'погода':
-        bot.send_message(user_id, "Введите название города, что бы узнать погоду")
+    if message.text.lower() == "/start" or message.text.lower() == 'طقس':
+        bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس")
         data["states"][user_id] = CITY_STATE
 
     elif '/reset' in message.text.lower():
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
         data["states"][user_id] = CITY_STATE
 
     else:
-        bot.send_message(user_id, "Я тебя не понял")
+        bot.send_message(user_id, "أنا لا أفهمك")
 
 
 # function with entering the name of the city
@@ -83,7 +83,7 @@ def city_handler(message):
 
     if '/reset' in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
 
     else:
         data[WEATHER_DATE_STATE][user_id] = message.text.lower()
@@ -93,7 +93,7 @@ def city_handler(message):
 
         # check for the wrong city name
         if 'error' in data_:
-            bot.send_message(message.from_user.id, "Вы ввели неверный город, напишите название города еще раз")
+            bot.send_message(message.from_user.id, "أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى")
             data["states"][user_id] = CITY_STATE
 
         else:
@@ -104,14 +104,14 @@ def city_handler(message):
             # create buttons
             markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
             markup.add(*[types.KeyboardButton(button) for button in
-                         ["Сегодня (" + week_day[timestamp().strftime("%a")] + ", " + timestamp().strftime("%d") + " " +
+                         ["اليوم (" + week_day[timestamp().strftime("%a")] + ", " + timestamp().strftime("%d") + " " +
                           month_dict[timestamp().strftime("%B")] + ")",
-                          "Завтра (" + week_day[timestamp(1).strftime("%a")] + ", " + timestamp(1).strftime(
+                          "غدا (" + week_day[timestamp(1).strftime("%a")] + ", " + timestamp(1).strftime(
                               "%d") + " " + month_dict[timestamp(1).strftime("%B")] + ")",
-                          "Послезавтра (" + week_day[timestamp(2).strftime("%a")] + ", " + timestamp(2).strftime(
+                          "بعد غد (" + week_day[timestamp(2).strftime("%a")] + ", " + timestamp(2).strftime(
                               "%d") + " " +
                           month_dict[timestamp(2).strftime("%B")] + ")"]])
-            bot.send_message(user_id, 'Сегодня, завтра, послезавтра?', reply_markup=markup)
+            bot.send_message(user_id, 'اليوم ، غدا ، بعد غد؟', reply_markup=markup)
             data["states"][user_id] = WEATHER_DATE_STATE
 
 
@@ -124,22 +124,22 @@ def weather_date(message):
 
     if "/reset" in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
 
     else:
         def forecast_day():
-            if "сегодня" in data_forecast:
+            if "اليوم" in data_forecast:
                 forecast_data = 0
-            elif "послезавтра" in data_forecast:
+            elif "بعد غد" in data_forecast:
                 forecast_data = 2
-            elif "завтра" in data_forecast:
+            elif "غدا" in data_forecast:
                 forecast_data = 1
             else:
                 forecast_data = 3
             return forecast_data
 
         if forecast_day() == 3:
-            bot.send_message(message.from_user.id, 'Выбрана неверная дата, повторите ввод')
+            bot.send_message(message.from_user.id, 'تم تحديد تاريخ خاطئ ، أعد الإدخال')
 
         response = requests.get(api_url, params={'city': city, 'forecast': forecast_day()})
         data_ = response.json()
@@ -148,17 +148,17 @@ def weather_date(message):
         # smile function
         def weather_smile():
             cloud, sun, rain, snow, cloud_2, cloud_sun = '☁', '☀', '🌧', '❄', "🌥", "⛅"
-            if "пасмурно" in smile:
+            if "غائم غالبًا" in smile:
                 send_smile = cloud
-            elif smile == "солнечно" or smile == 'ясно':
+            elif smile == "مشمس" or smile == 'صافي':
                 send_smile = sun
-            elif smile == 'облачно с прояснениями':
+            elif smile == 'غائم ، صافي في بعض الأحيان':
                 send_smile = cloud_sun
-            elif 'дождь' in smile:
+            elif 'مطر' in smile:
                 send_smile = rain
-            elif 'снег' in smile:
+            elif 'الثلج' in smile:
                 send_smile = snow
-            elif smile == 'переменная облачность' or smile == 'небольшая облачность':
+            elif smile == 'غائم جزئيا' or smile == 'غائم قليلا':
                 send_smile = cloud_2
             else:
                 send_smile = ''
@@ -166,26 +166,25 @@ def weather_date(message):
             return send_smile
 
         # depending on the selected day, a response from the bot is created
-        if "сегодня" in message.text.lower():
+        if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}°C")
+                             f"الطقس سيكون : {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}°C")
             data["states"][user_id] = CITY_STATE
 
-        elif "послезавтра" in message.text.lower():
+        elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном будет {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}" + "°C")
+                             f"الطقس سيكون :  {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
-        elif "завтра" in message.text.lower():
+        elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном будет {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}" + "°C")
+                             f"الطقس سيكون :  {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
-        actions(query="INSERT INTO actions (user_id, city, forecast_day, created_at) "
-                      f"VALUES({user_id}, '{city}', '{data_forecast}', CURRENT_TIMESTAMP)")
+        
 
 
 bot.polling()
