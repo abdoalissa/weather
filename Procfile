@@ -1,1 +1,1 @@
-bot: python3 WeatherBotTelegram.py
+web: python3 WeatherBotTelegram.py
