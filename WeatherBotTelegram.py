@@ -144,6 +144,7 @@ def weather_date(message):
         response = requests.get(api_url, params={'city': city, 'forecast': forecast_day()})
         data_ = response.json()
         smile = data_['description']
+        new_d = data_['description']
 
 
         # smile function
@@ -166,7 +167,7 @@ def weather_date(message):
 
             return send_smile
          
-            new_d = ""
+            
             if "пасмурно" in data_['description']:
                 new_d = "غائم غالبًا"
             elif data_['description'] == "солнечно":
