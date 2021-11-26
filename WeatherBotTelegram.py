@@ -75,7 +75,7 @@ def dispatcher(message):
 # dialog start function
 def main_handler(message):
     user_id = message.from_user.id
-    user_name = message.from_user.name
+    user_name = update.message.from_user.first_name
 
     if message.text.lower() == "/start" or message.text.lower() == 'طقس':
         bot.send_message(user_id, "مرحبا"+user_name,telegram.ParseMode.HTML)
