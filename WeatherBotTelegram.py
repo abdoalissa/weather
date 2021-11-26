@@ -11,16 +11,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 rollbar.init(os.getenv('ROLLBAR_ACCESS_TOKEN'))
-token = os.getenv("2121108045:AAHDsyrirUdcyI74TLwvYnHiagQMJdq8vsg")
+token = os.getenv("TELEGRAM_TOKEN")
 
 
 # database connection
 def connect():
-    conn = psycopg2.connect(database=os.getenv('postgres://sfaznsidrztonf:5acb7262d99f2fcd2d2533313003b9f9a6cb375b59cf855b53f2853cc01d9a6b@ec2-52-71-217-158.compute-1.amazonaws.com:5432/d5roea4vt57mh6'),
-                            user=os.getenv('sfaznsidrztonf'),
-                            password=os.getenv('5acb7262d99f2fcd2d2533313003b9f9a6cb375b59cf855b53f2853cc01d9a6b'),
-                            host=os.getenv('ec2-52-71-217-158.compute-1.amazonaws.com'),
-                            port=os.getenv('5432'))
+    conn = psycopg2.connect(database=os.getenv('DB'),
+                            user=os.getenv('USER'),
+                            password=os.getenv('PASS'),
+                            host=os.getenv('HOST'),
+                            port=os.getenv('PORT'))
     cursor = conn.cursor()
     return cursor, conn
 
