@@ -79,16 +79,16 @@ def main_handler(message):
     user_name = message.from_user.first_name
 
     if message.text.lower() == "/start" or message.text.lower() == 'طقس':
-        bot.send_message(user_id, "مرحبا"+user_name)
-        bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس✏️")
+        bot.send_message(user_id, " مرحبا "+user_name)
+        bot.send_message(user_id, user_name + " أدخل اسم المدينة لمعرفة الطقس ✏️ ")
         data["states"][user_id] = CITY_STATE
 
     elif '/reset' in message.text.lower():
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
+        bot.send_message(message.from_user.id, user_name+' اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊 ')
         data["states"][user_id] = CITY_STATE
 
     else:
-        bot.send_message(user_id, "🥲أنا لا أفهمك")
+        bot.send_message(user_id, user_name+ " 🥲أنا لا أفهمك ")
 
 
 # function with entering the name of the city
@@ -97,7 +97,7 @@ def city_handler(message):
 
     if '/reset' in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
+        bot.send_message(message.from_user.id,user_name+ ' اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊 ')
 
     else:
         data[WEATHER_DATE_STATE][user_id] = message.text.lower()
@@ -107,7 +107,7 @@ def city_handler(message):
 
         # check for the wrong city name
         if 'error' in data_:
-            bot.send_message(message.from_user.id, "😪أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى")
+            bot.send_message(message.from_user.id,user_name " 😪أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى ")
             data["states"][user_id] = CITY_STATE
 
         else:
@@ -125,7 +125,7 @@ def city_handler(message):
                           "بعد غد (" + week_day[timestamp(2).strftime("%a")] + ", " + timestamp(2).strftime(
                               "%d") + " " +
                           month_dict[timestamp(2).strftime("%B")] + ")"]])
-            bot.send_message(user_id, 'اليوم ، غدا ، بعد غد؟🤔', reply_markup=markup)
+            bot.send_message(user_id, ' اليوم ، غدا ، بعد غد؟🤔 فقط احد الخيارات', reply_markup=markup)
             data["states"][user_id] = WEATHER_DATE_STATE
 
 
@@ -138,7 +138,7 @@ def weather_date(message):
 
     if "/reset" in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
+        bot.send_message(message.from_user.id, user_name+' اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊 ')
 
     else:
         def forecast_day():
@@ -187,20 +187,20 @@ def weather_date(message):
         # depending on the selected day, a response from the bot is created
         if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس: {weather_rep[data_['description']]}  {weather_smile()}\n\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}")
+                             f"الطقس : {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة : {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس:  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}")
+                             f"الطقس :  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة : {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس:  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}")
+                             f"الطقس :  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة : {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         
