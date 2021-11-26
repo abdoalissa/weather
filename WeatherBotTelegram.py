@@ -75,8 +75,10 @@ def dispatcher(message):
 # dialog start function
 def main_handler(message):
     user_id = message.from_user.id
+    user_name = message.from_user.name
 
     if message.text.lower() == "/start" or message.text.lower() == 'طقس':
+        bot.send_message(user_id, "مرحبا"+user_name,telegram.ParseMode.HTML)
         bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس✏️")
         data["states"][user_id] = CITY_STATE
 
@@ -184,20 +186,20 @@ def weather_date(message):
         # depending on the selected day, a response from the bot is created
         if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون : {weather_rep[data_['description']]}  {weather_smile()}\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}  °C")
+                             f"الطقس: {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])})
             data["states"][user_id] = CITY_STATE
 
         elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()}\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}" + "  °C")
+                             f"الطقس:  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])})
             data["states"][user_id] = CITY_STATE
 
         elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()}\n"
-                             f" درجة الحرارة: {ceil(data_['temp'])}" + "  °C")
+                             f"الطقس:  {weather_rep[data_['description']]}  {weather_smile()}\n\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])}")
             data["states"][user_id] = CITY_STATE
 
         
