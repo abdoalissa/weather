@@ -77,15 +77,15 @@ def main_handler(message):
     user_id = message.from_user.id
 
     if message.text.lower() == "/start" or message.text.lower() == 'طقس':
-        bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس")
+        bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس✏️")
         data["states"][user_id] = CITY_STATE
 
     elif '/reset' in message.text.lower():
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
         data["states"][user_id] = CITY_STATE
 
     else:
-        bot.send_message(user_id, "أنا لا أفهمك")
+        bot.send_message(user_id, "🥲أنا لا أفهمك")
 
 
 # function with entering the name of the city
@@ -94,7 +94,7 @@ def city_handler(message):
 
     if '/reset' in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
 
     else:
         data[WEATHER_DATE_STATE][user_id] = message.text.lower()
@@ -104,7 +104,7 @@ def city_handler(message):
 
         # check for the wrong city name
         if 'error' in data_:
-            bot.send_message(message.from_user.id, "أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى")
+            bot.send_message(message.from_user.id, "😪أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى")
             data["states"][user_id] = CITY_STATE
 
         else:
@@ -122,7 +122,7 @@ def city_handler(message):
                           "بعد غد (" + week_day[timestamp(2).strftime("%a")] + ", " + timestamp(2).strftime(
                               "%d") + " " +
                           month_dict[timestamp(2).strftime("%B")] + ")"]])
-            bot.send_message(user_id, 'اليوم ، غدا ، بعد غد؟', reply_markup=markup)
+            bot.send_message(user_id, 'اليوم ، غدا ، بعد غد؟🤔', reply_markup=markup)
             data["states"][user_id] = WEATHER_DATE_STATE
 
 
@@ -135,7 +135,7 @@ def weather_date(message):
 
     if "/reset" in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس😊')
 
     else:
         def forecast_day():
@@ -150,7 +150,7 @@ def weather_date(message):
             return forecast_data
 
         if forecast_day() == 3:
-            bot.send_message(message.from_user.id, 'تم تحديد تاريخ خاطئ ، أعد الإدخال')
+            bot.send_message(message.from_user.id, '🥲تم تحديد تاريخ خاطئ ، أعد الإدخال')
 
         response = requests.get(api_url, params={'city': city, 'forecast': forecast_day()})
         data_ = response.json()
