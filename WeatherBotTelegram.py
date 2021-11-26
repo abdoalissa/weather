@@ -61,7 +61,7 @@ api_url = 'https://stepik.akentev.com/api/weather'
 def dispatcher(message):
     user_id = message.from_user.id
     state = data["states"].get(user_id, MAIN_STATE)
-    db_users(id=user_id, state=state)
+   
 
     if state == MAIN_STATE:
         main_handler(message)
