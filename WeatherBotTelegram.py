@@ -184,20 +184,20 @@ def weather_date(message):
         # depending on the selected day, a response from the bot is created
         if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون : {weather_rep[data_['description']]}  {weather_smile()},"
-                             f" درجة الحرارة: {ceil(data_['temp'])}°C")
+                             f"الطقس سيكون : {weather_rep[data_['description']]}  {weather_smile()}\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])}  °C")
             data["states"][user_id] = CITY_STATE
 
         elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()},"
-                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
+                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()}\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "  °C")
             data["states"][user_id] = CITY_STATE
 
         elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()},"
-                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
+                             f"الطقس سيكون :  {weather_rep[data_['description']]}  {weather_smile()}\n"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "  °C")
             data["states"][user_id] = CITY_STATE
 
         
