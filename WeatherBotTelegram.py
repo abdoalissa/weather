@@ -171,7 +171,7 @@ def weather_date(message):
                 data_['description'] = "غائم غالبًا"
             elif data_['description'] == "солнечно":
                 data_['description'] = "مشمس"
-            elif data_['description'] == "ясно"
+            elif data_['description'] == "ясно":
                 data_['description'] = "صافي"
             elif data_['description'] == 'облачно с прояснениями':
                 data_['description'] = "غائم"
