@@ -145,25 +145,47 @@ def weather_date(message):
         data_ = response.json()
         smile = data_['description']
 
+
         # smile function
         def weather_smile():
             cloud, sun, rain, snow, cloud_2, cloud_sun = '☁', '☀', '🌧', '❄', "🌥", "⛅"
-            if "غائم غالبًا" in smile:
+            if "пасмурно" in smile:
                 send_smile = cloud
-            elif smile == "مشمس" or smile == 'صافي':
+            elif smile == "солнечно" or smile == 'ясно':
                 send_smile = sun
-            elif smile == 'غائم ، صافي في بعض الأحيان':
+            elif smile == 'облачно с прояснениями':
                 send_smile = cloud_sun
-            elif 'مطر' in smile:
+            elif 'дождь' in smile:
                 send_smile = rain
-            elif 'الثلج' in smile:
+            elif 'снег' in smile:
                 send_smile = snow
-            elif smile == 'غائم جزئيا' or smile == 'غائم قليلا':
+            elif smile == 'переменная облачность' or smile == 'небольшая облачность':
                 send_smile = cloud_2
             else:
                 send_smile = ''
 
             return send_smile
+         
+            
+            if "пасмурно" in data_['description']:
+                data_['description'] = "غائم غالبًا"
+            elif data_['description'] == "солнечно":
+                data_['description'] = "مشمس"
+            elif data_['description'] == "ясно"
+                data_['description'] = "صافي"
+            elif data_['description'] == 'облачно с прояснениями':
+                data_['description'] = "غائم"
+            elif 'дождь' in data_['description']:
+                data_['description'] = "ماطر"
+            elif 'снег' in data_['description']:
+                data_['description'] = "مثلج"
+            elif data_['description'] == 'переменная облачность':
+                data_['description'] = "غائم جزئيا"
+            elif data_['description'] == 'небольшая облачность':
+                data_['description'] = "غائم قليلا"
+
+
+        
 
         # depending on the selected day, a response from the bot is created
         if "اليوم" in message.text.lower():
