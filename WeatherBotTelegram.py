@@ -11,16 +11,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 rollbar.init(os.getenv('ROLLBAR_ACCESS_TOKEN'))
-token = os.getenv("TELEGRAM_TOKEN")
+token = os.getenv("2121108045:AAHDsyrirUdcyI74TLwvYnHiagQMJdq8vsg")
 
 
 # database connection
 def connect():
-    conn = psycopg2.connect(database=os.getenv('DB'),
-                            user=os.getenv('USER'),
-                            password=os.getenv('PASS'),
-                            host=os.getenv('HOST'),
-                            port=os.getenv('PORT'))
+    conn = psycopg2.connect(database=os.getenv('postgres://sfaznsidrztonf:5acb7262d99f2fcd2d2533313003b9f9a6cb375b59cf855b53f2853cc01d9a6b@ec2-52-71-217-158.compute-1.amazonaws.com:5432/d5roea4vt57mh6'),
+                            user=os.getenv('sfaznsidrztonf'),
+                            password=os.getenv('5acb7262d99f2fcd2d2533313003b9f9a6cb375b59cf855b53f2853cc01d9a6b'),
+                            host=os.getenv('ec2-52-71-217-158.compute-1.amazonaws.com'),
+                            port=os.getenv('5432'))
     cursor = conn.cursor()
     return cursor, conn
 
@@ -57,26 +57,26 @@ WEATHER_DATE_STATE = "weather_date_handler"
 data = {'states': {}, MAIN_STATE: {}, CITY_STATE: {}, WEATHER_DATE_STATE: {}, 'forecast': {}, }
 
 # dictionaries for translation into Russian
-week_day = {'Mon': 'Пн',
-            'Tue': 'Вт',
-            'Wed': "Ср",
-            'Thu': "Чт",
-            'Fri': "Пт",
-            'Sat': "Сб",
-            'Sun': "Вс"}
+week_day = {'Mon': 'الأثنين',
+            'Tue': 'الثلاثاء',
+            'Wed': "الاربعاء",
+            'Thu': "الخميس",
+            'Fri': "الجمعة",
+            'Sat': "السبت",
+            'Sun': "الاحد"}
 
-month_dict = {"January": "января",
-              "February": "февраля",
-              "March": "марта",
-              "April": "апреля",
-              "May": "мая",
-              "June": "июня",
-              "July": "июля",
-              "August": "августа",
-              "September": "сентября",
-              "October": "октября",
-              "November": "ноября",
-              "December": "декабря"
+month_dict = {"January": "كانون الثاني",
+              "February": "شباط",
+              "March": "اذار",
+              "April": "نيسان",
+              "May": "ايار",
+              "June": "حزيران",
+              "July": "تموز",
+              "August": "اب",
+              "September": "ايلول",
+              "October": "تشرين الاول",
+              "November": "تشرين الثاني",
+              "December": "كانون الاول"
               }
 
 api_url = 'https://stepik.akentev.com/api/weather'
@@ -101,15 +101,15 @@ def main_handler(message):
     user_id = message.from_user.id
 
     if message.text.lower() == "/start" or message.text.lower() == 'погода':
-        bot.send_message(user_id, "Введите название города, что бы узнать погоду")
+        bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس")
         data["states"][user_id] = CITY_STATE
 
     elif '/reset' in message.text.lower():
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
         data["states"][user_id] = CITY_STATE
 
     else:
-        bot.send_message(user_id, "Я тебя не понял")
+        bot.send_message(user_id, "انا لا افهمك")
 
 
 # function with entering the name of the city
@@ -118,7 +118,7 @@ def city_handler(message):
 
     if '/reset' in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
 
     else:
         data[WEATHER_DATE_STATE][user_id] = message.text.lower()
@@ -128,7 +128,7 @@ def city_handler(message):
 
         # check for the wrong city name
         if 'error' in data_:
-            bot.send_message(message.from_user.id, "Вы ввели неверный город, напишите название города еще раз")
+            bot.send_message(message.from_user.id, "أدخلت المدينة الخطأ ، اكتب اسم المدينة مرة أخرى")
             data["states"][user_id] = CITY_STATE
 
         else:
@@ -146,7 +146,7 @@ def city_handler(message):
                           "Послезавтра (" + week_day[timestamp(2).strftime("%a")] + ", " + timestamp(2).strftime(
                               "%d") + " " +
                           month_dict[timestamp(2).strftime("%B")] + ")"]])
-            bot.send_message(user_id, 'Сегодня, завтра, послезавтра?', reply_markup=markup)
+            bot.send_message(user_id, 'اليوم ، غدا ، بعد غد؟', reply_markup=markup)
             data["states"][user_id] = WEATHER_DATE_STATE
 
 
@@ -159,7 +159,7 @@ def weather_date(message):
 
     if "/reset" in message.text.lower():
         data["states"][user_id] = CITY_STATE
-        bot.send_message(message.from_user.id, 'Выполнена перезагрузка, введите название города, что бы узнать погоду')
+        bot.send_message(message.from_user.id, 'اكتملت إعادة التشغيل ، أدخل اسم المدينة للتحقق من الطقس')
 
     else:
         def forecast_day():
@@ -174,7 +174,7 @@ def weather_date(message):
             return forecast_data
 
         if forecast_day() == 3:
-            bot.send_message(message.from_user.id, 'Выбрана неверная дата, повторите ввод')
+            bot.send_message(message.from_user.id, 'تم تحديد تاريخ خاطئ ، أعد الإدخال')
 
         response = requests.get(api_url, params={'city': city, 'forecast': forecast_day()})
         data_ = response.json()
