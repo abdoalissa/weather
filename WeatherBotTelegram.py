@@ -170,19 +170,19 @@ def weather_date(message):
             
             if "пасмурно" in data_['description']:
                 new_d = "غائم غالبًا"
-            elif data_['description'] == "солнечно":
+            if "солнечно" in data_['description']:
                 new_d = "مشمس"
-            elif data_['description'] == "ясно":
+            if "ясно" in data_['description']:
                 new_d = "صافي"
-            elif data_['description'] == 'облачно с прояснениями':
+            if "облачно с прояснениями" in data_['description']:
                 new_d = "غائم"
-            elif 'дождь' in data_['description']:
+            if "дождь" in data_['description']:
                 new_d = "ماطر"
-            elif 'снег' in data_['description']:
+            if "снег" in data_['description']:
                 new_d = "مثلج"
-            elif data_['description'] == 'переменная облачность':
+            if "переменная облачность" in data_['description']:
                 new_d = "غائم جزئيا"
-            elif data_['description'] == 'небольшая облачность':
+            if "небольшая облачность" in data_['description']:
                 new_d = "غائم قليلا"
 
 
