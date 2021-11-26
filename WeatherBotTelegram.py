@@ -75,7 +75,7 @@ def dispatcher(message):
 def main_handler(message):
     user_id = message.from_user.id
 
-    if message.text.lower() == "/start" or message.text.lower() == 'погода':
+    if message.text.lower() == "/start" or message.text.lower() == 'طقس':
         bot.send_message(user_id, "أدخل اسم المدينة لمعرفة الطقس")
         data["states"][user_id] = CITY_STATE
 
@@ -138,11 +138,11 @@ def weather_date(message):
 
     else:
         def forecast_day():
-            if "сегодня" in data_forecast:
+            if "اليوم" in data_forecast:
                 forecast_data = 0
-            elif "послезавтра" in data_forecast:
+            elif "بعد غد" in data_forecast:
                 forecast_data = 2
-            elif "завтра" in data_forecast:
+            elif "غدا" in data_forecast:
                 forecast_data = 1
             else:
                 forecast_data = 3
@@ -158,17 +158,17 @@ def weather_date(message):
         # smile function
         def weather_smile():
             cloud, sun, rain, snow, cloud_2, cloud_sun = '☁', '☀', '🌧', '❄', "🌥", "⛅"
-            if "пасмурно" in smile:
+            if "غائم غالبًا" in smile:
                 send_smile = cloud
-            elif smile == "солнечно" or smile == 'ясно':
+            elif smile == "مشمس" or smile == 'صافي':
                 send_smile = sun
-            elif smile == 'облачно с прояснениями':
+            elif smile == 'غائم ، صافي في بعض الأحيان':
                 send_smile = cloud_sun
-            elif 'дождь' in smile:
+            elif 'مطر' in smile:
                 send_smile = rain
-            elif 'снег' in smile:
+            elif 'الثلج' in smile:
                 send_smile = snow
-            elif smile == 'переменная облачность' or smile == 'небольшая облачность':
+            elif smile == 'غائم جزئيا' or smile == 'غائم قليلا':
                 send_smile = cloud_2
             else:
                 send_smile = ''
@@ -176,22 +176,22 @@ def weather_date(message):
             return send_smile
 
         # depending on the selected day, a response from the bot is created
-        if "сегодня" in message.text.lower():
+        if "اليوم" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}°C")
+                             f"خارج النافذة {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}°C")
             data["states"][user_id] = CITY_STATE
 
-        elif "послезавтра" in message.text.lower():
+        elif "بعد غد" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном будет {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}" + "°C")
+                             f"سيكون هناك خارج النافذة {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
-        elif "завтра" in message.text.lower():
+        elif "غدا" in message.text.lower():
             bot.send_message(message.from_user.id,
-                             f"За окном будет {data_['description']}  {weather_smile()},"
-                             f" температура: {ceil(data_['temp'])}" + "°C")
+                             f"سيكون هناك خارج النافذة {data_['description']}  {weather_smile()},"
+                             f" درجة الحرارة: {ceil(data_['temp'])}" + "°C")
             data["states"][user_id] = CITY_STATE
 
         
